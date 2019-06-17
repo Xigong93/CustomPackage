@@ -1,2 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pokercc.android.custompackage.share_lib" />
+    package="pokercc.android.custompackage.share_lib">
+
+    <application>
+        <activity android:name="${WECHAT_PACKAGE_NAME_PREFIX}.wxapi.WXEntryActivity" />
+    </application>
+</manifest>
