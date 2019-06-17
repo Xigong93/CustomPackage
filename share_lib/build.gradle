@@ -1,5 +1,13 @@
 apply plugin: 'com.android.library'
 
+
+try {
+    println "WECHAT_PACKAGE_NAME_PREFIX:$WECHAT_PACKAGE_NAME_PREFIX"
+} catch (Exception e) {
+    throw new RuntimeException("必须设置 WECHAT_PACKAGE_NAME_PREFIX 才能编译成功,比如 这样设置 在引用这个库前设置 findProject('$project.name').ext.WECHAT_PACKAGE_NAME_PREFIX='xx' ", e)
+}
+
+
 android {
     compileSdkVersion 28
 
@@ -9,9 +17,9 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        buildConfigField 'String', 'WECHAT_PACKAGE_NAME_PREFIX', "\"$WECHAT_PACKAGE_NAME_PREFIX\""
     }
 
     buildTypes {

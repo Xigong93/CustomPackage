@@ -4,6 +4,9 @@ import android.app.Activity;
 
 import pokercc.android.custompakcage.CustomPackage;
 
-//@CustomPackage(BuildConfig.APPLICATION_ID)
+/**
+ * 这个包名需要是主工程的
+ */
+@CustomPackage(BuildConfig.WECHAT_PACKAGE_NAME_PREFIX + ".api")
 public class WxEntryActivity extends Activity {
 }

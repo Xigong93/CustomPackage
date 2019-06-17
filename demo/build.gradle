@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
 
+def appId = "pokercc.android.custompackage.demo"
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "pokercc.android.custompackage.demo"
+        applicationId appId
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -17,6 +18,9 @@ android {
         }
     }
 }
+
+// 设置微信分享的包名
+findProject(":share_lib").ext.WECHAT_PACKAGE_NAME_PREFIX = appId
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

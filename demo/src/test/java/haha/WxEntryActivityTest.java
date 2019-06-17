@@ -14,4 +14,10 @@ public class WxEntryActivityTest {
         Class<?> clazz = Class.forName(BuildConfig.APPLICATION_ID + "." + WxEntryActivity.class.getSimpleName());
         assertNotNull(clazz);
     }
+
+    @Test
+    public void testLibrary() throws ClassNotFoundException {
+        Class<?> clazz = Class.forName(BuildConfig.APPLICATION_ID + ".api." + WxEntryActivity.class.getSimpleName());
+        assertNotNull(clazz);
+    }
 }
