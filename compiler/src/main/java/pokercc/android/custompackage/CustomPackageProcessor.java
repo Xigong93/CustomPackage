@@ -44,7 +44,8 @@ public class CustomPackageProcessor extends AbstractProcessor {
                 typeElement = (TypeElement) element.getEnclosingElement();
             }
             Set<Modifier> modifiers = typeElement.getModifiers();
-            // 进行检查，不能被final 修饰
+            // 进行检查
+            // 不能被final 修饰
             if (modifiers.contains(Modifier.FINAL)) {
                 throw new IllegalArgumentException(typeElement.getQualifiedName() + " must be not final class");
             }
@@ -57,8 +58,9 @@ public class CustomPackageProcessor extends AbstractProcessor {
                 throw new IllegalArgumentException(typeElement.getQualifiedName() + " must be have package");
 
             }
-            processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE,
-                    "CustomPackage.packageName:" + packageName + ",subclassName:" + packageName);
+            String fullName = packageName + "." + typeElement.getSimpleName();
+
+            processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "CustomPackage create class :" + fullName);
 
             String javaFileContent = "package " + packageName + " ;" +
                     "\n/* \n* create by " + CustomPackageProcessor.class.getSimpleName() + " don't modify!! \n*/\n" +
@@ -69,17 +71,15 @@ public class CustomPackageProcessor extends AbstractProcessor {
             try {
                 writer = processingEnv
                         .getFiler()
-                        .createSourceFile(packageName + "." + typeElement.getSimpleName())
+                        .createSourceFile(fullName)
                         .openWriter()
                         .append(javaFileContent);
             } catch (IOException e) {
-                e.printStackTrace();
-                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+                throw new RuntimeException("unable to create source file " + fullName, e);
             } finally {
                 try {
                     if (writer != null) writer.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }
