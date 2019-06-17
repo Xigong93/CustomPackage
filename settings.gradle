@@ -1,0 +1,1 @@
+include ':demo', ':annotations', ':compiler', ':share_lib'
