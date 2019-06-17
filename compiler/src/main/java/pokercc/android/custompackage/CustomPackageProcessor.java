@@ -10,12 +10,19 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 
 import pokercc.android.custompakcage.CustomPackage;
 
+/**
+ * 自定义包名的注解处理器
+ *
+ * @author pokercc <pokercc@sina.com>
+ * @date 2019-6-17 21:23:43
+ */
 public class CustomPackageProcessor extends AbstractProcessor {
     Elements elementUtils;
     private ProcessingEnvironment processingEnv;
@@ -36,19 +43,33 @@ public class CustomPackageProcessor extends AbstractProcessor {
             } else {
                 typeElement = (TypeElement) element.getEnclosingElement();
             }
+            Set<Modifier> modifiers = typeElement.getModifiers();
+            // 进行检查，不能被final 修饰
+            if (modifiers.contains(Modifier.FINAL)) {
+                throw new IllegalArgumentException(typeElement.getQualifiedName() + " must be not final class");
+            }
+            // 必须是public修饰 的
+            if (!modifiers.contains(Modifier.PUBLIC)) {
+                throw new IllegalArgumentException(typeElement.getQualifiedName() + " must be public class");
+            }
+            // 得有包名
+            if (typeElement.getSimpleName().equals(typeElement.getQualifiedName())) {
+                throw new IllegalArgumentException(typeElement.getQualifiedName() + " must be have package");
+
+            }
             processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE,
                     "CustomPackage.packageName:" + packageName + ",subclassName:" + packageName);
 
             String javaFileContent = "package " + packageName + " ;" +
-                    "\n/* \n* create by CustomPackageProcessor \n*/\n" +
-                    "public class " + packageName + " extends " + typeElement.getQualifiedName() + " {}";
+                    "\n/* \n* create by " + CustomPackageProcessor.class.getSimpleName() + " don't modify!! \n*/\n" +
+                    "public class " + typeElement.getSimpleName() + " extends " + typeElement.getQualifiedName() + " {}";
 
 
             Writer writer = null;
             try {
                 writer = processingEnv
                         .getFiler()
-                        .createSourceFile(packageName)
+                        .createSourceFile(packageName + "." + typeElement.getSimpleName())
                         .openWriter()
                         .append(javaFileContent);
             } catch (IOException e) {
@@ -64,8 +85,6 @@ public class CustomPackageProcessor extends AbstractProcessor {
         }
     };
 
-    public CustomPackageProcessor() {
-    }
 
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);

@@ -1,3 +1,5 @@
+package haha;
+
 import android.app.Activity;
 
 import pokercc.android.custompackage.demo.BuildConfig;
