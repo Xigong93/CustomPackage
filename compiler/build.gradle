@@ -1,5 +1,4 @@
 apply plugin: 'java-library'
-
 dependencies {
     implementation project(":annotations")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -7,3 +6,5 @@ dependencies {
 
 sourceCompatibility = "6"
 targetCompatibility = "6"
+
+apply from: rootProject.file('gradle/bintray.gradle')

@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 /**
  * 标记用来生成一个特定包名的类，继承自该类
  *
- * @author pokercc <pokercc@sina.com>
- * @date 2019-6-17 21:23:43
+ * @author pokercc
+ * 2019-6-17 21:23:43
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.CLASS)
@@ -24,7 +24,7 @@ public @interface CustomPackage {
     /**
      * same as {@link #packageName()}
      *
-     * @return
+     * @return the Generate class's package
      */
     String value();
 }

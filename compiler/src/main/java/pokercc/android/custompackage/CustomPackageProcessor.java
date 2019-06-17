@@ -20,8 +20,8 @@ import pokercc.android.custompakcage.CustomPackage;
 /**
  * 自定义包名的注解处理器
  *
- * @author pokercc <pokercc@sina.com>
- * @date 2019-6-17 21:23:43
+ * @author pokercc
+ * 2019-6-17 21:23:43
  */
 public class CustomPackageProcessor extends AbstractProcessor {
     Elements elementUtils;

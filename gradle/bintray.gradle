@@ -1,0 +1,96 @@
+apply plugin: 'com.jfrog.bintray'
+
+apply plugin: "com.github.dcendents.android-maven"
+
+version = "0.1.2"
+group = "pokercc.android.custompackage"
+
+def siteUrl = 'https://github.com/pokercc/CustomPackage'    // project homepage
+def gitUrl = 'https://github.com/pokercc/CustomPackage.git'
+// project git
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom.project {
+            packaging POM_PACKAGING
+            name POM_ARTIFACT_ID
+            url siteUrl
+            description POM_NAME
+
+            // Set your license
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'pokercc'
+                    name 'pokercc'
+                    email 'pokercc@sina.com'
+                }
+            }
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+
+        }
+
+    }
+}
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+/**
+ * Task: bintrayUpload
+ */
+
+//指定编译的编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+tasks.withType(Javadoc) {
+    options.encoding = "UTF-8"
+}
+
+def localProperties() {
+    Properties properties = new Properties()
+    File localFile = project.rootProject.file('local.properties')
+    if (localFile.exists()) {
+        properties.load(localFile.newDataInputStream())
+    }
+    return properties
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+Properties properties = localProperties()
+
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = 'android'
+        name = POM_ARTIFACT_ID
+        websiteUrl = siteUrl
+        licenses = ['Apache-2.0']
+        vcsUrl = gitUrl
+        publish = true
+    }
+}
