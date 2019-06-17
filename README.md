@@ -3,8 +3,8 @@
 ## 怎么用
 1. 引入gradle 依赖
 ```gradle
-    implementation project(":share_lib")
     implementation project(":annotations")
+    annotationProcessor project(":compiler")
 ```
 2. 在需要特殊包名的类上，添加CustomPackage注解
 ```java
