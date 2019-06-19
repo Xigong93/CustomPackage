@@ -97,5 +97,4 @@ try {
 通过AnnotationProcessor 生成了一个指定包名的子类。
 所以源class ,只能被public 修饰，不能被final修饰，且不能是内部类
 
-```
 传送门 https://github.com/pokercc/CustomPackage
