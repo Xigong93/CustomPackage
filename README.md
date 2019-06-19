@@ -32,7 +32,7 @@ public class WxEntryActivity extends Activity {
 通过AnnotationProcessor 生成了一个指定包名的子类。
 所以源class ,只能被public 修饰，不能被final修饰，且不能是内部类
 
-例如这个类
+例如这个类，全类名是`aaa.WxEntryActivity`
 ```java
 package aaa;
  
@@ -43,7 +43,7 @@ public class WxEntryActivity  {
 }
 
 ```
-这个类的全类名是`aaa.WxEntryActivity`
+
 在编译的时候会生成一个`bbb.WxEntryActivity`的类
 ```java
 package bbb;
