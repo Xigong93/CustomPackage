@@ -3,13 +3,14 @@
 ## 怎么用
 1. 引入gradle 依赖
 ```gradle
-    implementation project(":annotations")
-    annotationProcessor project(":compiler")
+    def custom_package_version = "0.1.2"
+    implementation "pokercc.android.custompackage:annotations:$custom_package_version"
+    annotationProcessor "pokercc.android.custompackage:compiler:$custom_package_version"
 ```
 2. 在需要特殊包名的类上，添加CustomPackage注解
 ```java
 // value 为生成的类package
-@CustomPackage(BuildConfig.APPLICATION_ID)
+@CustomPackage(BuildConfig.WECHAT_PACKAGE_NAME_PREFIX + ".api")
 public class WxEntryActivity extends Activity {
 }
 ```

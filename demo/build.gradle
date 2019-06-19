@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 def appId = "pokercc.android.custompackage.demo"
 android {
-    compileSdkVersion 28
+    compileSdkVersion compile_version
     defaultConfig {
+        minSdkVersion min_version
+        targetSdkVersion target_version
         applicationId appId
-        minSdkVersion 19
-        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -26,9 +26,14 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    if (release) {
+        implementation "pokercc.android.custompackage:annotations:$custom_package_version"
+        annotationProcessor "pokercc.android.custompackage:compiler:$custom_package_version"
+    } else {
+        implementation project(":annotations")
+        annotationProcessor project(":compiler")
+    }
     implementation project(":share_lib")
-    implementation project(":annotations")
-    annotationProcessor project(":compiler")
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

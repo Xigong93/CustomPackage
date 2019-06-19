@@ -2,7 +2,7 @@ apply plugin: 'com.jfrog.bintray'
 
 apply plugin: "com.github.dcendents.android-maven"
 
-version = "0.1.2"
+version = custom_package_version
 group = "pokercc.android.custompackage"
 
 def siteUrl = 'https://github.com/pokercc/CustomPackage'    // project homepage
