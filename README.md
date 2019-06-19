@@ -56,7 +56,7 @@ public class WxEntryActivity extends Activity {
 
 ```
 
-即可测试运行
+嗯，你就可以跑跑看了。
 ### 2. WxEntryActivity 在library module
 ``使用的是注解生成器的方式，所以这个module，不能打成aar，只能随主工程一起编译``
 
