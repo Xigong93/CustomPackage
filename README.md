@@ -47,7 +47,9 @@ public class WxEntryActivity  {
 在编译的时候会生成一个`bbb.WxEntryActivity`的类
 ```java
 package bbb;
-
+/* 
+* create by CustomPackageProcessor don't modify!! 
+*/
 public class WxEntryActivity  extends aaa.WxEntryActivity{
 }
 
