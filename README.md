@@ -24,6 +24,10 @@ public class WxEntryActivity  extends aaa.WxEntryActivity{
 }
 ```
 
+
+
+是不是你就可以通过这种方式，解决`${applicationId}.wxapi.WXEntryActivity`的问题呢？
+
 ## 怎么用？
 
 ### 1. WxEntryActivity 在app module
@@ -56,8 +60,7 @@ public class WxEntryActivity extends Activity {
 ### 2. WxEntryActivity 在library module
 ``使用的是注解生成器的方式，所以这个module，不能打成aar，只能随主工程一起编译``
 
-这个时候，有一个问题？编译的时候，library module 需要app module 的包名，其他的操作同上面
-两种方式把app module 的包名，传递到library module
+这个时候，进行完上面的操作有一个问题，BuildConfig.APPLICATION_ID 在library module 中，可不是你想要的那个包名哦，它是library 的appid，而不是app module 的appid。 怎么解决呢？
 #### a. 在root build.gradle 上定义一个变量
 ```groovy
 // in root build.gradle
@@ -76,12 +79,12 @@ manifestPlaceholders['WECHAT_PACKAGE_NAME_PREFIX'] = rootproject.ext.application
 ```
 #### b. 直接给library module 中定义一个变量，传递包名
 
-* 在app module 中
+* 在app module build.gradle中
 ```groovy
-// 设置微信分享的包名
+// 设置微信分享的包名,share_lib 是分享module 的名字
 findProject(":share_lib").ext.WECHAT_PACKAGE_NAME_PREFIX = appId
 ```
-* 在library module 中，进行参数检查
+* 在library module build.gradle 中，进行参数检查
 ```groovy
 try {
     println "WECHAT_PACKAGE_NAME_PREFIX:$WECHAT_PACKAGE_NAME_PREFIX"
