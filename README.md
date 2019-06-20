@@ -98,3 +98,5 @@ try {
 所以源class ,只能被public 修饰，不能被final修饰，且不能是内部类
 
 传送门 https://github.com/pokercc/CustomPackage
+
+有兄弟留言发现还有更简单的方案实现，使用activity-alias,传送门 https://blog.csdn.net/happyjie1988/article/details/78677255  不过CustomPackage这个思路是很好的
