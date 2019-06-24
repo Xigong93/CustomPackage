@@ -34,7 +34,7 @@ public class WxEntryActivity  extends aaa.WxEntryActivity{
 
 1. 引入gradle 依赖
 ```gradle
-def custom_package_version = "0.1.2"
+def custom_package_version = "0.1.3"
 implementation "pokercc.android.custompackage:annotations:$custom_package_version"
 annotationProcessor "pokercc.android.custompackage:compiler:$custom_package_version"
 ```
