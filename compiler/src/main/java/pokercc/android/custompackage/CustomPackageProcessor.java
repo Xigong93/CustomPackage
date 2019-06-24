@@ -2,7 +2,9 @@ package pokercc.android.custompackage;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -10,8 +12,10 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 
@@ -53,10 +57,19 @@ public class CustomPackageProcessor extends AbstractProcessor {
             if (!modifiers.contains(Modifier.PUBLIC)) {
                 throw new IllegalArgumentException(typeElement.getQualifiedName() + " must be public class");
             }
+            // 不能是接口
+            if (typeElement.getKind() == ElementKind.INTERFACE) {
+                throw new IllegalArgumentException(typeElement.getQualifiedName() + " must be class not interface");
+            }
             // 得有包名
             if (typeElement.getSimpleName().equals(typeElement.getQualifiedName())) {
                 throw new IllegalArgumentException(typeElement.getQualifiedName() + " must be have package");
-
+            }
+            // 不能包含抽象方法
+            for (Element field : elementUtils.getAllMembers(typeElement)) {
+                if (field.getModifiers().contains(Modifier.ABSTRACT) && field.getKind() == ElementKind.METHOD) {
+                    throw new IllegalArgumentException(typeElement.getQualifiedName() + " must don't have abstract method , but find " + field.toString());
+                }
             }
             String fullName = packageName + "." + typeElement.getSimpleName();
 

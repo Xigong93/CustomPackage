@@ -95,7 +95,7 @@ try {
 我比较推荐第二种方式，因为声明的更加明确一些，详细请参考demo
 ## 原理：
 通过AnnotationProcessor 生成了一个指定包名的子类。
-所以源class ,只能被public 修饰，不能被final修饰，且不能是内部类
+所以源class ,只能被public 修饰，不能被final修饰，且不能是内部类,不是包含抽象方法，不能是接口
 
 传送门 https://github.com/pokercc/CustomPackage
 

@@ -7,4 +7,6 @@ import pokercc.android.custompakcage.CustomPackage;
 
 @CustomPackage(BuildConfig.APPLICATION_ID)
 public class WxEntryActivity extends Activity {
+
+
 }
